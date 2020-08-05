@@ -8,6 +8,20 @@ class signupPage extends StatefulWidget {
 
 // ignore: camel_case_types
 class _signupPage extends State<signupPage> {
+
+
+  var _formKey = GlobalKey<FormState>();
+  bool passwordVisible = true;
+
+  String _fullname = "";
+  String _username = "";
+  String _email = "";
+  String _password = "";
+  String _cnic = "";
+  String _phone = "";
+  String _address = "";
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,258 +80,296 @@ class _signupPage extends State<signupPage> {
                     SizedBox(
                       height: 20,
                     ),
-                    Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.08,
-                          width: MediaQuery.of(context).size.width - 40,
-                          child: Material(
-                            elevation: 5,
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(25),
-                                topRight: Radius.circular(25),
-                                bottomLeft: Radius.circular(25),
-                                topLeft: Radius.circular(25),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 10, right: 10, top: 5, bottom: 5),
-                              child: TextField(
-                                keyboardType: TextInputType.emailAddress,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  labelText: "Full Name",
-                                  // labelStyle: TextStyle(
-                                  //     color: Colors.black45, fontSize: 14),
+                     Form(
+                          autovalidate: true,
+                          key: _formKey,
+                          child: new Column(
+                            children: <Widget>[
+                              //  Padding(padding: EdgeInsets.all(10.0)),
+                              Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: new Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  width: MediaQuery.of(context).size.width - 40,
+                                  child: new TextFormField(
+                                    onSaved: (value) {
+                                      setState(() {
+                                        _fullname = value;
+                                      });
+                                      print("_fullname: + $_fullname");
+                                    },
+                                    decoration: new InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors
+                                              .blue[900], //this has no effect
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      //  helperText: 'Username',
+                                      hintText: 'Full Name',
+                                    ),
+                                    keyboardType: TextInputType.text,
+                                    //validator: _validateEmail,
+                                  ),
                                 ),
+                                //height: 63.0,
                               ),
-                            ),
-                          ),
-                        )),
-                    Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.08,
-                          width: MediaQuery.of(context).size.width - 40,
-                          child: Material(
-                            elevation: 5,
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(25),
-                                topRight: Radius.circular(25),
-                                bottomLeft: Radius.circular(25),
-                                topLeft: Radius.circular(25),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 10, right: 10, top: 5, bottom: 5),
-                              child: TextField(
-                                keyboardType: TextInputType.emailAddress,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  labelText: "Username",
-                                  // labelStyle: TextStyle(
-                                  //     color: Colors.black45, fontSize: 14),
+                               Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: new Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  width: MediaQuery.of(context).size.width - 40,
+                                  child: new TextFormField(
+                                    onSaved: (value) {
+                                      setState(() {
+                                        _username = value;
+                                      });
+                                      print("Username: + $_username");
+                                    },
+                                    decoration: new InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors
+                                              .blue[900], //this has no effect
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      //  helperText: 'Username',
+                                      hintText: 'Username',
+                                    ),
+                                    keyboardType: TextInputType.text,
+                                    //validator: _validateEmail,
+                                  ),
                                 ),
+                                //height: 63.0,
                               ),
-                            ),
-                          ),
-                        )),
-                    Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.08,
-                          width: MediaQuery.of(context).size.width - 40,
-                          child: Material(
-                            elevation: 5,
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(25),
-                                topRight: Radius.circular(25),
-                                bottomLeft: Radius.circular(25),
-                                topLeft: Radius.circular(25),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 10, right: 10, top: 5, bottom: 5),
-                              child: TextField(
-                                keyboardType: TextInputType.emailAddress,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  labelText: "Email",
-                                  // labelStyle: TextStyle(
-                                  //     color: Colors.black45, fontSize: 14),
+                               Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: new Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  width: MediaQuery.of(context).size.width - 40,
+                                  child: new TextFormField(
+                                    onSaved: (value) {
+                                      setState(() {
+                                        _email = value;
+                                      });
+                                      print("email: + $_email");
+                                    },
+                                    decoration: new InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors
+                                              .blue[900], //this has no effect
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      //  helperText: 'Username',
+                                      hintText: 'Email',
+                                    ),
+                                    keyboardType: TextInputType.text,
+                                    //validator: _validateEmail,
+                                  ),
                                 ),
+                                //height: 63.0,
                               ),
-                            ),
-                          ),
-                        )),
-                    Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.08,
-                          width: MediaQuery.of(context).size.width - 40,
-                          child: Material(
-                            elevation: 5,
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(25),
-                                topRight: Radius.circular(25),
-                                bottomLeft: Radius.circular(25),
-                                topLeft: Radius.circular(25),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 10, right: 10, top: 5, bottom: 5),
-                              child: TextField(
-                                obscureText: true,
-                                keyboardType: TextInputType.visiblePassword,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  labelText: "Password",
-                                  // labelStyle: TextStyle(
-                                  //     color: Colors.black45, fontSize: 14),
+                              Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: new Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  width: MediaQuery.of(context).size.width - 40,
+                                  child: new TextFormField(
+                                    onSaved: (value) {
+                                      setState(() {
+                                        _password = value;
+                                      });
+                                      print("password: + $_password");
+                                    },
+                                    decoration: new InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors
+                                              .blue[900], //this has no effect
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      hintText: 'Password',
+                                      fillColor: Colors.white,
+                                      suffixIcon: IconButton(
+                                        icon: Icon(
+                                          // Based on passwordVisible state choose the icon
+                                          passwordVisible
+                                              ? Icons.visibility_off
+                                              : Icons.visibility,
+                                          color: Theme.of(context).primaryColor,
+                                          // size: 16.0,
+                                        ),
+                                        onPressed: () {
+                                          // Update the state i.e. toogle the state of passwordVisible variable
+                                          setState(() {
+                                            passwordVisible = !passwordVisible;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    obscureText: passwordVisible,
+                                     autovalidate: true,
+                                  ),
                                 ),
+                                //height: 63.0,
                               ),
-                            ),
-                          ),
-                        )),
-                    Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.08,
-                          width: MediaQuery.of(context).size.width - 40,
-                          child: Material(
-                            elevation: 5,
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(25),
-                                topRight: Radius.circular(25),
-                                bottomLeft: Radius.circular(25),
-                                topLeft: Radius.circular(25),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 10, right: 10, top: 5, bottom: 5),
-                              child: TextField(
-                                obscureText: true,
-                                keyboardType: TextInputType.visiblePassword,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  focusColor: Colors.green,
-                                  labelText: "Confirm Password",
-                                  // labelStyle: TextStyle(
-                                  //     color: Colors.black45, fontSize: 14),
+                              Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: new Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  width: MediaQuery.of(context).size.width - 40,
+                                  child: new TextFormField(
+                                    onSaved: (value) {
+                                      setState(() {
+                                        _password = value;
+                                      });
+                                      print("password: + $_password");
+                                    },
+                                    decoration: new InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors
+                                              .blue[900], //this has no effect
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      hintText: 'Confirm Password',
+                                      fillColor: Colors.white,
+                                      suffixIcon: IconButton(
+                                        icon: Icon(
+                                          // Based on passwordVisible state choose the icon
+                                          passwordVisible
+                                              ? Icons.visibility_off
+                                              : Icons.visibility,
+                                          color: Theme.of(context).primaryColor,
+                                          // size: 16.0,
+                                        ),
+                                        onPressed: () {
+                                          // Update the state i.e. toogle the state of passwordVisible variable
+                                          setState(() {
+                                            passwordVisible = !passwordVisible;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    obscureText: passwordVisible,
+                                     autovalidate: true,
+                                  ),
                                 ),
+                                //height: 63.0,
                               ),
-                            ),
-                          ),
-                        )),
-                    Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.08,
-                          width: MediaQuery.of(context).size.width - 40,
-                          child: Material(
-                            elevation: 5,
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(25),
-                                topRight: Radius.circular(25),
-                                bottomLeft: Radius.circular(25),
-                                topLeft: Radius.circular(25),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 10, right: 10, top: 5, bottom: 5),
-                              child: TextField(
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  labelText: "CNIC",
-                                  // labelStyle: TextStyle(
-                                  //     color: Colors.black45, fontSize: 14),
+                               Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: new Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  width: MediaQuery.of(context).size.width - 40,
+                                  child: new TextFormField(
+                                    onSaved: (value) {
+                                      setState(() {
+                                        _cnic = value;
+                                      });
+                                      print("CNIC: + $_cnic");
+                                    },
+                                    decoration: new InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors
+                                              .blue[900], //this has no effect
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      //  helperText: 'Username',
+                                      hintText: 'CNIC',
+                                    ),
+                                    keyboardType: TextInputType.text,
+                                    //validator: _validateEmail,
+                                  ),
                                 ),
+                                //height: 63.0,
                               ),
-                            ),
-                          ),
-                        )),
-                    Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.08,
-                          width: MediaQuery.of(context).size.width - 40,
-                          child: Material(
-                            elevation: 5,
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(25),
-                                topRight: Radius.circular(25),
-                                bottomLeft: Radius.circular(25),
-                                topLeft: Radius.circular(25),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 10, right: 10, top: 5, bottom: 5),
-                              child: TextField(
-                                keyboardType: TextInputType.phone,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  labelText: "Phone Number",
-                                  // labelStyle: TextStyle(
-                                  //     color: Colors.black45, fontSize: 14),
+                               Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: new Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  width: MediaQuery.of(context).size.width - 40,
+                                  child: new TextFormField(
+                                    onSaved: (value) {
+                                      setState(() {
+                                        _phone = value;
+                                      });
+                                      print("Phone: + $_phone");
+                                    },
+                                    decoration: new InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors
+                                              .blue[900], //this has no effect
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      //  helperText: 'Username',
+                                      hintText: 'Phone Number',
+                                    ),
+                                    keyboardType: TextInputType.text,
+                                    //validator: _validateEmail,
+                                  ),
                                 ),
+                                //height: 63.0,
                               ),
-                            ),
-                          ),
-                        )),
-                    Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Container(
-                          height: MediaQuery.of(context).size.height * 0.08,
-                          width: MediaQuery.of(context).size.width - 40,
-                          child: Material(
-                            elevation: 10,
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(25),
-                                topRight: Radius.circular(25),
-                                bottomLeft: Radius.circular(25),
-                                topLeft: Radius.circular(25),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: 10, right: 10, top: 5, bottom: 5),
-                              child: TextField(
-                                keyboardType: TextInputType.text,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  labelText: "Address",
-                                  hoverColor: Colors.green,
-                                  // labelStyle: TextStyle(
-                                  //     color: Colors.black45, fontSize: 14),
+                               Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: new Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.06,
+                                  width: MediaQuery.of(context).size.width - 40,
+                                  child: new TextFormField(
+                                    onSaved: (value) {
+                                      setState(() {
+                                        _address = value;
+                                      });
+                                      print("Address: + $_address");
+                                    },
+                                    decoration: new InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors
+                                              .blue[900], //this has no effect
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      //  helperText: 'Username',
+                                      hintText: 'Address',
+                                    ),
+                                    keyboardType: TextInputType.text,
+                                    //validator: _validateEmail,
+                                  ),
                                 ),
+                                //height: 63.0,
                               ),
-                            ),
+
+                            ],
                           ),
-                        )),
+                        ),
                     SizedBox(
                       height: 30,
                     ),

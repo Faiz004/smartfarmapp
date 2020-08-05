@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:smartfarmapp/widgets/drawer.dart';
-import 'package:smartfarmapp/widgets/scenarioSlider.dart';
+import 'package:smartfarmapp/widgets/farmSlider.dart';
 
-class scenarioDashboard extends StatefulWidget {
+class farmDashboard extends StatefulWidget {
   @override
-  _scenarioDashboardState createState() => _scenarioDashboardState();
+  _farmDashboardState createState() => _farmDashboardState();
 }
 
-class _scenarioDashboardState extends State<scenarioDashboard> {
+class _farmDashboardState extends State<farmDashboard> {
   @override
   Widget build(BuildContext context) {
-        return Scaffold(
+    return Scaffold(
       appBar: AppBar(
           centerTitle: true,
           title: Text(
@@ -33,13 +33,13 @@ class _scenarioDashboardState extends State<scenarioDashboard> {
             height: 10.0,
           ),
           new Text(
-            "Scenarios",
+            "Jhonny's Farms",
             style: new TextStyle(fontSize: 25.0,  fontFamily: "Rowdies"),
           ),
            new SizedBox(
             height: 10.0,
           ),
-          scenarioSlider(),
+          farmSlider(),
         ],
       ),
     );
