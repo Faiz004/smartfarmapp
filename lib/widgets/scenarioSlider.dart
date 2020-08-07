@@ -17,10 +17,10 @@ class _scenarioSliderState extends State<scenarioSlider> {
           itemBuilder: (BuildContext context, int i) => Card(
             child: new InkWell(
               onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => mainDashboard()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => mainDashboard()),
+              // );
             },
               child: Container(
               width: MediaQuery.of(context).size.width * 0.5,

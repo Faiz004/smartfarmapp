@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smartfarmapp/pages/loginPage.dart';
 
 class drawerScreen extends StatefulWidget {
-  drawerScreen({Key key}) : super(key: key);
+  final SharedPreferences prefs;
+
+  drawerScreen(this.prefs, {Key key}) : super(key: key);
 
   @override
   _drawerScreenState createState() => _drawerScreenState();
@@ -15,38 +19,30 @@ class _drawerScreenState extends State<drawerScreen> {
         children: <Widget>[
           UserAccountsDrawerHeader(
             accountName: Text(
-              'Faiz Hashmi',
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.black),
+              '${widget.prefs.getString('name')}',
+              style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
             ),
             currentAccountPicture: Image.asset(
               'assets/images/SmartFarm.png',
               // height: MediaQuery.of(context).size.height * 0.2,
             ),
-            accountEmail: Text('faizhashmi614@gmail.com',
-             style: TextStyle(fontSize: 15.0, color: Colors.black),
-             ),
-            decoration: BoxDecoration(
-                color: Colors.white),
+            accountEmail: Text(
+              '${widget.prefs.getString('email')}',
+              style: TextStyle(fontSize: 15.0, color: Colors.black),
+            ),
+            decoration: BoxDecoration(color: Colors.white),
           ),
           DrawerListTile(
             iconData: Icons.dashboard,
             title: 'Dashboard',
             onTilePressed: () {},
           ),
-            DrawerListTile(
-            iconData: Icons.person,
-            title: 'Profile',
-            onTilePressed: () {},
-          ),
-             DrawerListTile(
+          DrawerListTile(
             iconData: Icons.insert_chart,
             title: 'Summary',
-            onTilePressed: () {},
-          ),
-          
-          DrawerListTile(
-            iconData: Icons.settings,
-            title: 'Settings',
             onTilePressed: () {},
           ),
           Divider(),
@@ -64,6 +60,19 @@ class _drawerScreenState extends State<drawerScreen> {
             iconData: Icons.info,
             title: 'About',
             onTilePressed: () {},
+          ),
+          DrawerListTile(
+            iconData: Icons.transit_enterexit,
+            title: 'Logout',
+            onTilePressed: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.remove('usertoken');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => loginPage(widget.prefs),
+                  ));
+            },
           )
         ],
       ),

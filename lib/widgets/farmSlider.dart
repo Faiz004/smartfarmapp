@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smartfarmapp/pages/scenarioDashboard.dart';
 
 class farmSlider extends StatefulWidget {
+  
   @override
   _farmSliderState createState() => _farmSliderState();
 }
@@ -16,12 +17,7 @@ class _farmSliderState extends State<farmSlider> {
           itemCount: 7, //TotalFarms.length
           itemBuilder: (BuildContext context, int i) => Card(
               child: new InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => scenarioDashboard()),
-              );
-            },
+            onTap: (){},
             child: Container(
               width: MediaQuery.of(context).size.width * 0.4,
               child: Column(
@@ -73,6 +69,7 @@ class _farmSliderState extends State<farmSlider> {
               ),
             ),
           )),
-        ));
+        )
+        );
   }
 }

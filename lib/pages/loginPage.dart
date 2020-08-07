@@ -3,17 +3,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smartfarmapp/pages/farmDashboard.dart';
-import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:smartfarmapp/pages/signupPage.dart';
 
 // ignore: camel_case_types
 class loginPage extends StatefulWidget {
+  final SharedPreferences prefs;
+  loginPage(this.prefs);
+
   @override
   State<StatefulWidget> createState() => _loginPage();
 }
-
-var _formKey = GlobalKey<FormState>();
 
 String _username = "";
 String _password = "";
@@ -30,6 +31,187 @@ String _validatePass(String value) {
 
 // ignore: camel_case_types
 class _loginPage extends State<loginPage> {
+  var _signinformKey = GlobalKey<FormState>();
+
+  _signin() async {
+    // setState(() {
+    //   isloading = true;
+    // });
+    print('email to save: $_username');
+    print('password to save: $_password');
+    // set up POST request arguments
+    String url = 'http://10.0.2.2:5000/user/login';
+    Map<String, String> headers = {"Content-type": "application/json"};
+    String json = '{"username": "$_username","password": "$_password"}';
+
+    // make POST request
+    http.Response response = await http.post(url, headers: headers, body: json);
+
+    int statusCode = response.statusCode;
+    print(statusCode);
+    print(response.body);
+    if (statusCode == 200) {
+      try {
+        var msg = 'error';
+        var x = jsonDecode(response.body);
+        _usertoken = x.toString();
+        x.forEach((key, value) {
+          print("Key : $key value $value");
+          msg = value;
+        });
+        print('x is $x');
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Container(
+                child: AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  content: Text(msg.toString()),
+                  actions: <Widget>[
+                    Container(
+                        alignment: Alignment.center,
+                        height: MediaQuery.of(context).size.height * 0.05,
+                        width: MediaQuery.of(context).size.width / 4,
+                        decoration: ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0)),
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        child: new FlatButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("Retry",
+                              style: TextStyle(
+                                fontFamily: "Rowdies",
+                                color: Colors.white,
+                                fontSize: 17,
+                              )),
+                        )),
+                  ],
+                ),
+              );
+            });
+      } catch (e) {
+        print('no');
+        _usertoken = response.body.toString();
+        print('Here is the original token: $_usertoken');
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('usertoken', _usertoken);
+        var payload = Jwt.parseJwt(_usertoken);
+        print('Here is the jwt code: $payload');
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Container(
+                child: AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  content: Text('Successfully Logged in'),
+                  actions: <Widget>[
+                    Container(
+                        alignment: Alignment.center,
+                        height: MediaQuery.of(context).size.height * 0.05,
+                        width: MediaQuery.of(context).size.width / 4,
+                        decoration: ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0)),
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        child: new FlatButton(
+                          onPressed: () async {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      farmDashboard(prefs, _usertoken),
+                                ));
+                          },
+                          child: Text("Home",
+                              style: TextStyle(
+                                fontFamily: "Rowdies",
+                                color: Colors.white,
+                                fontSize: 17,
+                              )),
+                        )),
+                    // RaisedButton(
+                    //   child: Text('Home'),
+                    //
+                  ],
+                ),
+              );
+            });
+      }
+    } else {
+      print('something went wrong');
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Container(
+              child: AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                content: Text("Oops! Error Occured"),
+                actions: <Widget>[
+                  Container(
+                      alignment: Alignment.center,
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.width / 4,
+                      decoration: ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0)),
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      child: new FlatButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("Retry",
+                            style: TextStyle(
+                              fontFamily: "Rowdies",
+                              color: Colors.white,
+                              fontSize: 17,
+                            )),
+                      )),
+                ],
+              ),
+            );
+          });
+    }
+    // setState(() {
+    //   isloading = false;
+    // });
+    // if (statusCode == 200) {
+    //   print("Signedin");
+    //   Text('Please');
+    //   var newbody = jsonDecode(response.body);
+    //   try {
+    //     _usertoken = newbody.toString();
+    //     print(_userid);
+    //     SharedPreferences prefs = await SharedPreferences.getInstance();
+    //     prefs.setString('usertoken', _usertoken);
+
+    //     // Navigator.push(
+    //     //     context,
+    //     //     MaterialPageRoute(
+    //     //       builder: (context) => farmDashboard(),
+    //     //     ));
+    //     //     // setState(() {
+    //     //     //   isloading = false;
+    //     //     // });
+    //   } catch (e) {
+    //     showDialog();
+    //   }
+    // } else {
+    //   print("Not Signedin");
+    //   showDialog();
+    // }
+  }
+
   bool passwordVisible = true;
   @override
   Widget build(BuildContext context) {
@@ -96,7 +278,7 @@ class _loginPage extends State<loginPage> {
                         ),
                         Form(
                           autovalidate: true,
-                          key: _formKey,
+                          key: _signinformKey,
                           child: new Column(
                             children: <Widget>[
                               //  Padding(padding: EdgeInsets.all(10.0)),
@@ -181,69 +363,6 @@ class _loginPage extends State<loginPage> {
                             ],
                           ),
                         ),
-                        // Padding(
-                        //     padding: EdgeInsets.all(10),
-                        //     child: Container(
-                        //       height: MediaQuery.of(context).size.height * 0.08,
-                        //       width: MediaQuery.of(context).size.width - 40,
-                        //       child: Material(
-                        //         elevation: 5,
-                        //         color: Colors.white,
-                        //         shape: RoundedRectangleBorder(
-                        //           borderRadius: BorderRadius.only(
-                        //             bottomRight: Radius.circular(25),
-                        //             topRight: Radius.circular(25),
-                        //             bottomLeft: Radius.circular(25),
-                        //             topLeft: Radius.circular(25),
-                        //           ),
-                        //         ),
-                        //         child: Padding(
-                        //           padding: EdgeInsets.only(
-                        //               left: 10, right: 10, top: 5, bottom: 5),
-                        //           child: TextField(
-                        //             keyboardType: TextInputType.emailAddress,
-                        //             decoration: InputDecoration(
-                        //               border: InputBorder.none,
-                        //               labelText: "Email",
-                        //               // labelStyle: TextStyle(
-                        //               //     color: Colors.black45, fontSize: 14),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     )),
-                        // Padding(
-                        //     padding: EdgeInsets.all(10),
-                        //     child: Container(
-                        //       height: MediaQuery.of(context).size.height * 0.08,
-                        //       width: MediaQuery.of(context).size.width - 40,
-                        //       child: Material(
-                        //         elevation: 10,
-                        //         color: Colors.white,
-                        //         shape: RoundedRectangleBorder(
-                        //           borderRadius: BorderRadius.only(
-                        //             bottomRight: Radius.circular(25),
-                        //             topRight: Radius.circular(25),
-                        //             bottomLeft: Radius.circular(25),
-                        //             topLeft: Radius.circular(25),
-                        //           ),
-                        //         ),
-                        //         child: Padding(
-                        //           padding: EdgeInsets.only(
-                        //               left: 10, right: 10, top: 5, bottom: 5),
-                        //           child: TextField(
-                        //             obscureText: true,
-                        //             keyboardType: TextInputType.visiblePassword,
-                        //             decoration: InputDecoration(
-                        //               border: InputBorder.none,
-                        //               labelText: "Password",
-                        //               // labelStyle: TextStyle(
-                        //               //     color: Colors.black45, fontSize: 14),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     )),
                         SizedBox(
                           height: 50,
                         ),
@@ -258,7 +377,7 @@ class _loginPage extends State<loginPage> {
                             ),
                             child: new FlatButton(
                               onPressed: () async {
-                                _formKey.currentState.save();
+                                _signinformKey.currentState.save();
                                 _signin();
                               },
                               child: Text("Sign in",
@@ -293,7 +412,7 @@ class _loginPage extends State<loginPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => signupPage()),
+                                builder: (context) => signupPage(widget.prefs)),
                           );
                         },
                       )
@@ -303,53 +422,6 @@ class _loginPage extends State<loginPage> {
               )),
         ));
   }
-}
-
-_signin() async {
-  // setState(() {
-  //   isloading = true;
-  // });
-  print('email to save: $_username');
-  print('password to save: $_password');
-  // set up POST request arguments
-  String url = 'http://10.0.2.2:5000/user/login';
-  Map<String, String> headers = {"Content-type": "application/json"};
-  String json = '{"email": "$_username", "password": "$_password"}';
-
-  // make POST request
-  http.Response response = await http.post(url, headers: headers, body: json);
-
-  int statusCode = response.statusCode;
-  print(statusCode);
-  print(response.body);
-  // setState(() {
-  //   isloading = false;
-  // });
-  // if (statusCode == 200) {
-  //   print("Signedin");
-  //   Text('Please');
-  //   var newbody = jsonDecode(response.body);
-  //   try {
-  //     _usertoken = newbody.toString();
-  //     print(_userid);
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     prefs.setString('usertoken', _usertoken);
-
-  //     // Navigator.push(
-  //     //     context,
-  //     //     MaterialPageRoute(
-  //     //       builder: (context) => Home(_userid, _usertoken, 0),
-  //     //     ));
-  // //     // setState(() {
-  // //     //   isloading = false;
-  // //     // });
-  //   } catch (e) {
-  //     showDialog();
-  //   }
-  // } else {
-  //   print("Not Signedin");
-  //   showDialog();
-  // }
 }
 
 class TopWaveClipper extends CustomClipper<Path> {
