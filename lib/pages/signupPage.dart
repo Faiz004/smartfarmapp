@@ -41,7 +41,7 @@ class _signupPage extends State<signupPage> {
     print('Address to save: $_address');
     // set up POST request arguments
 
-    String url = 'http://10.0.2.2:5000/user/register';
+    String url = 'http://192.168.0.103:5000/user/register';
     Map<String, String> headers = {"Content-type": "application/json"};
     String json =
         '{"fullname": "$_fullname","username": "$_username","email": "$_email","password": "$_password","password2": "$_password2","cnic": "$_cnic","phone": "$_phone","address": "$_address"}';

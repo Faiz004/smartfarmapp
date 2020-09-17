@@ -20,7 +20,7 @@ class _ruleDashboardState extends State<ruleDashboard> {
     var payload = Jwt.parseJwt(widget.usertoken);
     var userid = payload['userid'];
     print('user id is: $userid');
-    var url = 'http://10.0.2.2:5000/rule/byscenario/${widget.scenarioid}';
+    var url = 'http://192.168.0.103:5000/rule/byscenario/${widget.scenarioid}';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       print(response.body);

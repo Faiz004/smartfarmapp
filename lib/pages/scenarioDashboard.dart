@@ -25,7 +25,7 @@ class _scenarioDashboardState extends State<scenarioDashboard> {
     var payload = Jwt.parseJwt(widget.usertoken);
     var userid = payload['userid'];
     print('user id is: $userid');
-    var url = 'http://10.0.2.2:5000/scenario/byfarm/${widget.farmid}';
+    var url = 'http://192.168.0.103:5000/scenario/byfarm/${widget.farmid}';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       print(response.body);

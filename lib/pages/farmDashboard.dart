@@ -30,7 +30,7 @@ class _farmDashboardState extends State<farmDashboard> {
     widget.prefs.setString('email', payload['email']);
 
     print('user id is: $userid');
-    var url = 'http://10.0.2.2:5000/farm/byuser/$userid';
+    var url = 'http://192.168.0.103:5000/farm/byuser/$userid';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       print(response.body);

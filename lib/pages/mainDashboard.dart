@@ -25,7 +25,7 @@ class _mainDashboardState extends State<mainDashboard> {
     print('sfid is : $sfid');
     print('Command is: $cmd');
 
-    String url = 'http://10.0.2.2:5000/fetchsensordata/data';
+    String url = 'http://192.168.0.103:5000/fetchsensordata/data';
     Map<String, String> headers = {"Content-type": "application/json"};
     String json = '{"sfid": "$sfid","cmd": "$cmd"}';
 
@@ -89,7 +89,7 @@ class _mainDashboardState extends State<mainDashboard> {
     // var payload = Jwt.parseJwt(widget.usertoken);
     // var userid = payload['userid'];
     // print('user id is: $userid');
-    var url = 'http://10.0.2.2:5000/sensorfield/byfarm/${widget.farmid}';
+    var url = 'http://192.168.0.103:5000/sensorfield/byfarm/${widget.farmid}';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       List processeddata = [];
@@ -366,7 +366,7 @@ class _mainDashboardState extends State<mainDashboard> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width *
-                                                            0.16,
+                                                            0.19,
                                                     child: new CustomSwitch(
                                                       value: true,
                                                       activeColor: Colors.green,
@@ -394,7 +394,7 @@ class _mainDashboardState extends State<mainDashboard> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width *
-                                                            0.16,
+                                                            0.19,
                                                     child: new CustomSwitch(
                                                       value: false,
                                                       activeColor: Colors.green,

@@ -40,7 +40,7 @@ class _loginPage extends State<loginPage> {
     print('email to save: $_username');
     print('password to save: $_password');
     // set up POST request arguments
-    String url = 'http://10.0.2.2:5000/user/login';
+    String url = 'http://192.168.0.103:5000/user/login';
     Map<String, String> headers = {"Content-type": "application/json"};
     String json = '{"username": "$_username","password": "$_password"}';
 
